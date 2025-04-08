@@ -1,0 +1,17 @@
+{
+  "name": "parcel-vanilla-starter",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Приложение для обрезки фото",
+  "source": "src/index.html",
+  "scripts": {
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html"
+  },
+  "dependencies": {
+    "cropperjs": "^1.6.2"
+  },
+  "devDependencies": {
+    "parcel": "^2.14.0"
+  }
+}
