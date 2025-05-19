@@ -61,3 +61,5 @@ const petr: IPremiumUser = new Users(
     "petr@example.com",
     new Date()
 );
+
+console.log(petr.getCoins());
