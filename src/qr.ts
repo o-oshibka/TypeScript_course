@@ -1,29 +1,45 @@
-import qrcode from 'qrcode';
+import * as qrcode from 'qrcode';
 
-export async function generateQRCode(text: string, size: number = 4): Promise<string> {
+export async function generateQRCode(text: string, userSize: number = 4): Promise<string> {
     try {
-        if (!text) {
-            throw new Error('требуется текст или URL');
+        const normalizedSize = Math.max(1, Math.min(10, userSize));
+        
+        let options: qrcode.QRCodeToStringOptions;
+        
+        if (normalizedSize <= 3) {
+            options = {
+                errorCorrectionLevel: 'L',
+                type: 'terminal',
+                scale: 1,
+                margin: 0,
+                color: { dark: '█', light: ' ' }
+            };
+        } 
+        else if (normalizedSize <= 6) {
+            options = {
+                errorCorrectionLevel: 'M',
+                type: 'terminal',
+                scale: 2,
+                margin: 1,
+                color: { dark: '██', light: '  ' }
+            };
+        } 
+        else {
+            options = {
+                errorCorrectionLevel: 'H',
+                type: 'terminal',
+                scale: 3 + Math.floor((normalizedSize - 7) / 2),
+                margin: 2,
+                color: { dark: '███', light: '   ' }
+            };
         }
 
-        if (size < 1 || size > 20) {
-            throw new Error('Размер должен быть от 1 до 20');
-        }
-
-        const options = {
-            small: true,
-            scale: size
-        };
-
-        const qr = await qrcode.toString(text, options);
-        return qr;
+        const qrString = await qrcode.toString(text, options);
+        
+        return normalizedSize <= 3 
+            ? qrString.split('\n').filter(l => l.trim()).join('\n')
+            : qrString;
     } catch (error) {
-        if (error instanceof Error) {
-            if (error.message.includes('Слишком много данных')) {
-                throw new Error('Ошибка: текст слишком длинный для создания QR-кода.');
-            }
-            throw error;
-        }
-        throw new Error('Произошла неизвестная ошибка при генерации QR-кода');
+        throw new Error(`Ошибка генерации: ${error instanceof Error ? error.message : String(error)}`);
     }
 }

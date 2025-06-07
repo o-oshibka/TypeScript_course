@@ -2,19 +2,25 @@
   "name": "cli-project",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "build/cli.js",
+  "bin": {
+    "qr": "build/cli.js"
+  },
   "scripts": {
     "build": "tsc",
-    "start": "node build/cli.jsjs"
+    "start": "ts-node build/cli.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^22.15.29",
     "@types/qrcode": "^1.5.5",
     "commander": "^13.1.0",
     "qrcode": "^1.5.4",
     "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.30",
+    "ts-node": "^10.9.2"
   }
 }
