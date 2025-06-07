@@ -38,6 +38,17 @@ export function activate(context: vscode.ExtensionContext) {
                 }
             });
             md.use(markdownItEmoji);
+
+            md.use(markdownItContainer, 'mermaid', {
+              validate: (params: string) => params.trim() === 'mermaid',
+              render: (tokens: Token[], idx: number) => {
+                  if (tokens[idx].nesting === 1) {
+                      return `<div class="mermaid">\n`;
+                  }
+                  return '</div>\n';
+              }
+          });
+
             return md;
         }
     };

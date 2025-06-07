@@ -29,13 +29,13 @@ function hello() {
 ???
 
 ### 4. Диаграммы
-```mermaid
+:::mermaid
 graph TD;
     A[Клиент] --> B(Сервер);
     B --> C{База данных};
     C -->|Чтение| B;
     B -->|Ответ| A;
-```
+:::
 
 ### 5. Emoji
 Эмодзи: :smile: :heart: :fire: :rocket:
